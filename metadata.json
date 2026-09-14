@@ -1,0 +1,8 @@
+{
+  "name": "Nativa",
+  "description": "Catálogo de productos naturales, presentación de productos y carrito de compras Nativa",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
