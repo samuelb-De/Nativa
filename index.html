@@ -38,9 +38,42 @@
     </nav>
 
     <div id="showcase-home">
-      <div class="showcase-banner">
-        <h1 class="subpage">Alimentos Vivos & Naturales</h1>
-        <p class="large">En Nativa seleccionamos las mejores cosechas orgánicas, infusiones silvestres y mieles puras para nutrir tu bienestar diario con lo mejor de nuestra tierra.</p>
+      <div class="showcase-home-content">
+        <div class="showcase-home-text">
+          <h2>¿Quienes Somos?</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sit amet dolor in risus tempor condimentum non finibus libero. Praesent sit amet venenatis lorem. In quis pulvinar magna, ut fermentum quam. Maecenas risus lectus, suscipit sed mollis rhoncus, cursus et turpis. Ut lobortis cursus condimentum. Nam laoreet turpis id purus pretium aliquet. Phasellus dapibus libero ut sodales dapibus.</p>
+          <p>Pellentesque aliquam lectus ut tincidunt sollicitudin. Proin a urna ante. Mauris ut cursus eros. Integer ultricies a nisi nec venenatis. Maecenas sed vulputate purus.</p>
+        </div>
+        <div class="showcase-home-media">
+          <div class="video-player-container" id="product-video-player">
+            <video id="product-presentation-video" preload="metadata" playsinline poster="img/portfolio/Video.png">
+              <source src="video/presentacion.mp4" type="video/mp4">
+              Tu navegador no soporta el formato de video.
+            </video>
+
+            <!-- Botón central grande de reproducción -->
+            <button type="button" class="video-play-center-btn" id="video-center-play-btn" aria-label="Reproducir video de presentación de producto">
+              <i class="fas fa-play"></i>
+            </button>
+
+            <!-- Barra inferior con controles funcionales -->
+            <div class="video-controls-bar" id="video-controls-bar">
+              <button type="button" class="btn-video-control" id="btn-video-play" aria-label="Reproducir o pausar">
+                <i class="fas fa-play"></i>
+              </button>
+              <div class="video-progress-wrap" id="video-progress-wrap" title="Progreso del video (8 segundos)">
+                <div class="video-progress-bar" id="video-progress-bar"></div>
+              </div>
+              <span class="video-time-display" id="video-time-display">0:00 / 0:08</span>
+              <button type="button" class="btn-video-control" id="btn-video-mute" aria-label="Activar o desactivar sonido">
+                <i class="fas fa-volume-up"></i>
+              </button>
+              <button type="button" class="btn-video-control" id="btn-video-fullscreen" aria-label="Pantalla completa">
+                <i class="fas fa-expand"></i>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -59,174 +92,225 @@
         </ul>
       </div>
 
-      <!-- Grid de Productos con botón de agregar al carrito abajo de cada imagen -->
-      <div class="products-grid" id="products-catalog-grid">
-        
-        <!-- Producto 1 -->
-        <article class="product-card" data-category="snacks">
-          <a href="producto.html?id=frutos-del-silvestre" class="product-card-link" title="Ver Frutos del Silvestre">
-            <div class="product-card-img-wrap">
-              <span class="product-card-badge">Snacks Saludables</span>
-              <img src="img/portfolio/Frutosdesi.png" alt="Frutos del Silvestre">
-            </div>
-          </a>
-          <div class="product-card-body">
-            <span class="product-card-category">350 g • 100% Natural</span>
-            <a href="producto.html?id=frutos-del-silvestre" class="product-card-link">
-              <h3 class="product-card-title">Frutos del Silvestre</h3>
-            </a>
-            <p class="product-card-desc">Selección premium de almendras, nueces, arándanos deshidratados y semillas tostadas al natural.</p>
-            <div class="product-card-footer">
-              <div class="product-card-price-row">
-                <span class="product-card-price">$8.500</span>
-                <a href="producto.html?id=frutos-del-silvestre" class="btn-view-details">Ver detalles &rarr;</a>
+      <!-- Contorno beige alrededor de los productos -->
+      <div class="products-catalog-contour">
+        <div class="products-grid" id="products-catalog-grid">
+          
+          <!-- Producto 1: Té vital -->
+          <article class="product-card" data-category="infusiones">
+            <a href="producto.html?id=te-vital-energizante" class="product-card-link" title="Ver Té vital">
+              <div class="product-card-img-wrap">
+                <img src="img/portfolio/Tevital.png" alt="Té vital">
               </div>
-              <button type="button" class="btn-add-cart" data-add-cart="frutos-del-silvestre" aria-label="Agregar Frutos del Silvestre al carrito">
-                <i class="fas fa-cart-plus"></i> Agregar al Carrito
-              </button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Producto 2 -->
-        <article class="product-card" data-category="desayunos">
-          <a href="producto.html?id=granola-artesanal" class="product-card-link" title="Ver Granola Artesanal">
-            <div class="product-card-img-wrap">
-              <span class="product-card-badge">Desayunos & Cereales</span>
-              <img src="img/portfolio/Granola.png" alt="Granola Artesanal con Miel">
-            </div>
-          </a>
-          <div class="product-card-body">
-            <span class="product-card-category">400 g • Horneada a mano</span>
-            <a href="producto.html?id=granola-artesanal" class="product-card-link">
-              <h3 class="product-card-title">Granola Artesanal con Miel</h3>
             </a>
-            <p class="product-card-desc">Avena integral tostada lentamente con miel pura de abeja, coco laminado, canela y chía.</p>
-            <div class="product-card-footer">
-              <div class="product-card-price-row">
-                <span class="product-card-price">$6.900</span>
-                <a href="producto.html?id=granola-artesanal" class="btn-view-details">Ver detalles &rarr;</a>
+            <div class="product-card-body">
+              <a href="producto.html?id=te-vital-energizante" class="product-card-link">
+                <h3 class="product-card-title">Té vital</h3>
+              </a>
+              <div class="product-card-footer">
+                <div class="product-card-price-row">
+                  <span class="product-card-price">$ 28.000</span>
+                </div>
+                <button type="button" class="btn-add-cart" data-add-cart="te-vital-energizante" aria-label="Agregar Té vital al carrito">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Agregar al<br>Carrito</span>
+                </button>
               </div>
-              <button type="button" class="btn-add-cart" data-add-cart="granola-artesanal" aria-label="Agregar Granola Artesanal al carrito">
-                <i class="fas fa-cart-plus"></i> Agregar al Carrito
-              </button>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- Producto 3 -->
-        <article class="product-card" data-category="infusiones">
-          <a href="producto.html?id=infusion-relajante" class="product-card-link" title="Ver Infusión Natural Relajante">
-            <div class="product-card-img-wrap">
-              <span class="product-card-badge">Infusiones & Hierbas</span>
-              <img src="img/portfolio/Infusion.png" alt="Infusión Natural Relajante">
-            </div>
-          </a>
-          <div class="product-card-body">
-            <span class="product-card-category">80 g • Sin Cafeína</span>
-            <a href="producto.html?id=infusion-relajante" class="product-card-link">
-              <h3 class="product-card-title">Infusión Natural Relajante</h3>
+          <!-- Producto 2: Granola -->
+          <article class="product-card" data-category="desayunos">
+            <a href="producto.html?id=granola-artesanal" class="product-card-link" title="Ver Granola">
+              <div class="product-card-img-wrap">
+                <img src="img/portfolio/Granola.png" alt="Granola">
+              </div>
             </a>
-            <p class="product-card-desc">Hojas y flores enteras de melisa, lavanda aromática y pétalos de manzanilla silvestre.</p>
-            <div class="product-card-footer">
-              <div class="product-card-price-row">
-                <span class="product-card-price">$5.500</span>
-                <a href="producto.html?id=infusion-relajante" class="btn-view-details">Ver detalles &rarr;</a>
+            <div class="product-card-body">
+              <a href="producto.html?id=granola-artesanal" class="product-card-link">
+                <h3 class="product-card-title">Granola</h3>
+              </a>
+              <div class="product-card-footer">
+                <div class="product-card-price-row">
+                  <span class="product-card-price">$ 32.000</span>
+                </div>
+                <button type="button" class="btn-add-cart" data-add-cart="granola-artesanal" aria-label="Agregar Granola al carrito">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Agregar al<br>Carrito</span>
+                </button>
               </div>
-              <button type="button" class="btn-add-cart" data-add-cart="infusion-relajante" aria-label="Agregar Infusión Natural Relajante al carrito">
-                <i class="fas fa-cart-plus"></i> Agregar al Carrito
-              </button>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- Producto 4 -->
-        <article class="product-card" data-category="infusiones">
-          <a href="producto.html?id=infusion-digestiva" class="product-card-link" title="Ver Infusión Herbal Digestiva">
-            <div class="product-card-img-wrap">
-              <span class="product-card-badge">Infusiones & Hierbas</span>
-              <img src="img/portfolio/Infusiondige.png" alt="Infusión Herbal Digestiva">
-            </div>
-          </a>
-          <div class="product-card-body">
-            <span class="product-card-category">80 g • Post-Comidas</span>
-            <a href="producto.html?id=infusion-digestiva" class="product-card-link">
-              <h3 class="product-card-title">Infusión Herbal Digestiva</h3>
+          <!-- Producto 3: Miel De Montaña -->
+          <article class="product-card" data-category="mieles">
+            <a href="producto.html?id=miel-pura-abeja" class="product-card-link" title="Ver Miel De Montaña">
+              <div class="product-card-img-wrap">
+                <img src="img/portfolio/Miel.png" alt="Miel De Montaña">
+              </div>
             </a>
-            <p class="product-card-desc">Combinación fresca de menta andina, cedrón cítrico, hinojo y boldo para una digestión liviana.</p>
-            <div class="product-card-footer">
-              <div class="product-card-price-row">
-                <span class="product-card-price">$5.500</span>
-                <a href="producto.html?id=infusion-digestiva" class="btn-view-details">Ver detalles &rarr;</a>
+            <div class="product-card-body">
+              <a href="producto.html?id=miel-pura-abeja" class="product-card-link">
+                <h3 class="product-card-title">Miel De Montaña</h3>
+              </a>
+              <div class="product-card-footer">
+                <div class="product-card-price-row">
+                  <span class="product-card-price">$ 36.000</span>
+                </div>
+                <button type="button" class="btn-add-cart" data-add-cart="miel-pura-abeja" aria-label="Agregar Miel De Montaña al carrito">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Agregar al<br>Carrito</span>
+                </button>
               </div>
-              <button type="button" class="btn-add-cart" data-add-cart="infusion-digestiva" aria-label="Agregar Infusión Herbal Digestiva al carrito">
-                <i class="fas fa-cart-plus"></i> Agregar al Carrito
-              </button>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- Producto 5 -->
-        <article class="product-card" data-category="mieles">
-          <a href="producto.html?id=miel-pura-abeja" class="product-card-link" title="Ver Miel Pura de Abeja Orgánica">
-            <div class="product-card-img-wrap">
-              <span class="product-card-badge">Mieles & Endulzantes</span>
-              <img src="img/portfolio/Miel.png" alt="Miel Pura de Abeja Orgánica">
-            </div>
-          </a>
-          <div class="product-card-body">
-            <span class="product-card-category">500 g • Frasco de Vidrio</span>
-            <a href="producto.html?id=miel-pura-abeja" class="product-card-link">
-              <h3 class="product-card-title">Miel Pura de Abeja Orgánica</h3>
+          <!-- Producto 4: Infusión Digestiva -->
+          <article class="product-card" data-category="infusiones">
+            <a href="producto.html?id=infusion-digestiva" class="product-card-link" title="Ver Infusión Digestiva">
+              <div class="product-card-img-wrap">
+                <img src="img/portfolio/Infusiondige.png" alt="Infusión Digestiva">
+              </div>
             </a>
-            <p class="product-card-desc">Miel cruda de bosque nativo sin pasteurizar, rica en polen natural y enzimas bioactivas.</p>
-            <div class="product-card-footer">
-              <div class="product-card-price-row">
-                <span class="product-card-price">$7.900</span>
-                <a href="producto.html?id=miel-pura-abeja" class="btn-view-details">Ver detalles &rarr;</a>
+            <div class="product-card-body">
+              <a href="producto.html?id=infusion-digestiva" class="product-card-link">
+                <h3 class="product-card-title">Infusión Digestiva</h3>
+              </a>
+              <div class="product-card-footer">
+                <div class="product-card-price-row">
+                  <span class="product-card-price">$ 24.000</span>
+                </div>
+                <button type="button" class="btn-add-cart" data-add-cart="infusion-digestiva" aria-label="Agregar Infusión Digestiva al carrito">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Agregar al<br>Carrito</span>
+                </button>
               </div>
-              <button type="button" class="btn-add-cart" data-add-cart="miel-pura-abeja" aria-label="Agregar Miel Pura de Abeja al carrito">
-                <i class="fas fa-cart-plus"></i> Agregar al Carrito
-              </button>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- Producto 6 -->
-        <article class="product-card" data-category="infusiones">
-          <a href="producto.html?id=te-vital-energizante" class="product-card-link" title="Ver Té Vital Energizante">
-            <div class="product-card-img-wrap">
-              <span class="product-card-badge">Infusiones & Hierbas</span>
-              <img src="img/portfolio/Tevital.png" alt="Té Vital Energizante">
-            </div>
-          </a>
-          <div class="product-card-body">
-            <span class="product-card-category">100 g • Blend Vital</span>
-            <a href="producto.html?id=te-vital-energizante" class="product-card-link">
-              <h3 class="product-card-title">Té Vital Energizante</h3>
+          <!-- Producto 5: Infusión -->
+          <article class="product-card" data-category="infusiones">
+            <a href="producto.html?id=infusion-relajante" class="product-card-link" title="Ver Infusión">
+              <div class="product-card-img-wrap">
+                <img src="img/portfolio/Infusion.png" alt="Infusión">
+              </div>
             </a>
-            <p class="product-card-desc">Blend energizante de hojas de té verde sencha, trozos de jengibre, naranja y semillas de guaraná.</p>
-            <div class="product-card-footer">
-              <div class="product-card-price-row">
-                <span class="product-card-price">$6.200</span>
-                <a href="producto.html?id=te-vital-energizante" class="btn-view-details">Ver detalles &rarr;</a>
+            <div class="product-card-body">
+              <a href="producto.html?id=infusion-relajante" class="product-card-link">
+                <h3 class="product-card-title">Infusión</h3>
+              </a>
+              <div class="product-card-footer">
+                <div class="product-card-price-row">
+                  <span class="product-card-price">$ 24.000</span>
+                </div>
+                <button type="button" class="btn-add-cart" data-add-cart="infusion-relajante" aria-label="Agregar Infusión al carrito">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Agregar al<br>Carrito</span>
+                </button>
               </div>
-              <button type="button" class="btn-add-cart" data-add-cart="te-vital-energizante" aria-label="Agregar Té Vital al carrito">
-                <i class="fas fa-cart-plus"></i> Agregar al Carrito
-              </button>
             </div>
-          </div>
-        </article>
+          </article>
 
+          <!-- Producto 6: Frutos Deshidratados -->
+          <article class="product-card" data-category="snacks">
+            <a href="producto.html?id=frutos-del-silvestre" class="product-card-link" title="Ver Frutos Deshidratados">
+              <div class="product-card-img-wrap">
+                <img src="img/portfolio/Frutosdesi.png" alt="Frutos Deshidratados">
+              </div>
+            </a>
+            <div class="product-card-body">
+              <a href="producto.html?id=frutos-del-silvestre" class="product-card-link">
+                <h3 class="product-card-title">Frutos Deshidratados</h3>
+              </a>
+              <div class="product-card-footer">
+                <div class="product-card-price-row">
+                  <span class="product-card-price">$ 38.000</span>
+                </div>
+                <button type="button" class="btn-add-cart" data-add-cart="frutos-del-silvestre" aria-label="Agregar Frutos Deshidratados al carrito">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Agregar al<br>Carrito</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Producto 7: Matcha Orgánico -->
+          <article class="product-card" data-category="infusiones">
+            <a href="producto.html?id=matcha-organico" class="product-card-link" title="Ver Matcha Orgánico">
+              <div class="product-card-img-wrap">
+                <img src="img/portfolio/Matcha.jpg" alt="Matcha Orgánico">
+              </div>
+            </a>
+            <div class="product-card-body">
+              <a href="producto.html?id=matcha-organico" class="product-card-link">
+                <h3 class="product-card-title">Matcha Orgánico</h3>
+              </a>
+              <div class="product-card-footer">
+                <div class="product-card-price-row">
+                  <span class="product-card-price">$ 48.000</span>
+                </div>
+                <button type="button" class="btn-add-cart" data-add-cart="matcha-organico" aria-label="Agregar Matcha Orgánico al carrito">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Agregar al<br>Carrito</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Producto 8: Polen Dorado -->
+          <article class="product-card" data-category="mieles">
+            <a href="producto.html?id=polen-dorado" class="product-card-link" title="Ver Polen Dorado">
+              <div class="product-card-img-wrap">
+                <img src="img/portfolio/Polen.jpg" alt="Polen Dorado">
+              </div>
+            </a>
+            <div class="product-card-body">
+              <a href="producto.html?id=polen-dorado" class="product-card-link">
+                <h3 class="product-card-title">Polen Dorado</h3>
+              </a>
+              <div class="product-card-footer">
+                <div class="product-card-price-row">
+                  <span class="product-card-price">$ 34.000</span>
+                </div>
+                <button type="button" class="btn-add-cart" data-add-cart="polen-dorado" aria-label="Agregar Polen Dorado al carrito">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Agregar al<br>Carrito</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Producto 9: Semillas Chía & Lino -->
+          <article class="product-card" data-category="snacks">
+            <a href="producto.html?id=semillas-chia-lino" class="product-card-link" title="Ver Mix Semillas Chía & Lino">
+              <div class="product-card-img-wrap">
+                <img src="img/portfolio/Semillas.jpg" alt="Mix Semillas Chía & Lino">
+              </div>
+            </a>
+            <div class="product-card-body">
+              <a href="producto.html?id=semillas-chia-lino" class="product-card-link">
+                <h3 class="product-card-title">Mix Semillas Chía & Lino</h3>
+              </a>
+              <div class="product-card-footer">
+                <div class="product-card-price-row">
+                  <span class="product-card-price">$ 22.000</span>
+                </div>
+                <button type="button" class="btn-add-cart" data-add-cart="semillas-chia-lino" aria-label="Agregar Mix Semillas Chía & Lino al carrito">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Agregar al<br>Carrito</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div>
       </div>
     </div>
   </section>
 
-  <hr>
-
   <footer id="main-footer">
     <div class="container">
-      <p class="small">© 2026 - Nativa Alimentos Naturales. Todos los derechos reservados.&copy;</p>
+      <p class="small">© 2026 - Nativa Alimentos Naturales. Todos los derechos reservados.</p>
       <ul>
         <li><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
         <li><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
@@ -238,6 +322,7 @@
   <!-- Scripts -->
   <script src="js/products.js"></script>
   <script src="js/cart.js"></script>
+  <script src="js/video-player.js"></script>
   <script>
     // Filtro por categoría en catálogo
     document.addEventListener('DOMContentLoaded', () => {

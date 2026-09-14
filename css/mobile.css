@@ -15,27 +15,45 @@
 
 /* Showcase */
 #showcase-home {
-  height: 30vh;
-  padding: 10px;
+  height: auto;
+  width: calc(100% - 24px);
+  margin: 15px auto 25px auto;
+  padding: 24px 20px;
+  border-radius: 22px;
 }
 
-#showcase .showcase-banner,
-#showcase-home .showcase-banner{
-  /* background: var(--secondary-color); */
+.showcase-home-content {
+  grid-template-columns: 1fr;
+  gap: 22px;
+}
+
+.showcase-home-text h2 {
+  font-size: 1.8rem;
+  margin-bottom: 14px;
+}
+
+.showcase-home-text p {
+  font-size: 14px;
+}
+
+#showcase {
+  height: auto;
+  padding: 30px 15px;
+}
+
+#showcase .showcase-banner {
   height: 100%;
-  width: 80%;
+  width: 90%;
 }
 
-#showcase h1,
-#showcase-home h1 {
-  font-size: 30px;
-  line-height: 1em;
+#showcase h1 {
+  font-size: 28px;
+  line-height: 1.1em;
   padding: 10px;
 }
 
-#showcase p,
-#showcase-home p {
-  font-size: 18px;
+#showcase p {
+  font-size: 16px;
 }
 
 /* Portfolio */

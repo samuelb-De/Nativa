@@ -2,11 +2,26 @@
 (function() {
   const CART_STORAGE_KEY = 'nativa_cart_v1';
 
-  // Obtener carrito de localStorage
+  // Obtener carrito de localStorage (sincronizando con precios actuales)
   function getStoredCart() {
     try {
       const data = localStorage.getItem(CART_STORAGE_KEY);
-      return data ? JSON.parse(data) : [];
+      const list = data ? JSON.parse(data) : [];
+      if (Array.isArray(list) && typeof getProductById === 'function') {
+        let changed = false;
+        list.forEach(item => {
+          const prod = getProductById(item.id);
+          if (prod && item.priceNum !== prod.priceNum) {
+            item.priceNum = prod.priceNum;
+            item.price = prod.price;
+            changed = true;
+          }
+        });
+        if (changed) {
+          localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(list));
+        }
+      }
+      return list;
     } catch (e) {
       console.error('Error al leer el carrito de localStorage:', e);
       return [];
@@ -23,9 +38,10 @@
     }
   }
 
-  // Formateador de moneda en pesos
+  // Formateador de moneda en pesos colombianos (COP)
   function formatMoney(amount) {
-    return '$' + Number(amount).toLocaleString('es-CL');
+    const num = Math.round(Number(amount) || 0);
+    return '$ ' + num.toLocaleString('es-CO');
   }
 
   // Agregar producto al carrito
@@ -94,7 +110,7 @@
     const cart = getStoredCart();
     const count = cart.reduce((sum, item) => sum + item.quantity, 0);
     const subtotal = cart.reduce((sum, item) => sum + (item.priceNum * item.quantity), 0);
-    const shipping = subtotal > 0 && subtotal < 25000 ? 2990 : 0;
+    const shipping = subtotal > 0 && subtotal < 70000 ? 9000 : 0;
     const total = subtotal + shipping;
     return { count, subtotal, shipping, total };
   }
@@ -281,7 +297,7 @@
                 </div>
                 <div class="form-group">
                   <label for="order-phone">Teléfono / WhatsApp *</label>
-                  <input type="tel" id="order-phone" required placeholder="+56 9 1234 5678">
+                  <input type="tel" id="order-phone" required placeholder="+57 300 123 4567">
                 </div>
               </div>
               <div class="form-group">
@@ -291,11 +307,11 @@
               <div class="form-row">
                 <div class="form-group">
                   <label for="order-address">Dirección de Entrega *</label>
-                  <input type="text" id="order-address" required placeholder="Calle, número, depto">
+                  <input type="text" id="order-address" required placeholder="Calle, carrera, número, apto">
                 </div>
                 <div class="form-group">
-                  <label for="order-city">Ciudad / Comuna *</label>
-                  <input type="text" id="order-city" required placeholder="Santiago, Valparaíso...">
+                  <label for="order-city">Ciudad / Municipio *</label>
+                  <input type="text" id="order-city" required placeholder="Bogotá, Medellín, Cali...">
                 </div>
               </div>
               <div class="form-group">

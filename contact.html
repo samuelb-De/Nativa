@@ -34,19 +34,14 @@
       </div>
     </nav>
 
-    <div id="showcase">
-      <div class="showcase-banner">
-        <h1 class="subpage">Quiénes Somos</h1>
-        <p class="large">Pasión por el origen, la pureza y los alimentos que hacen bien.</p>
-      </div>
-    </div>
   </header>
 
-  <section id="contact">
+  <section id="contact" style="padding-top: 35px;">
     <div class="container">
-      <div style="margin-bottom: 40px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
-        <h2 style="font-size: 28px; color: #285943; margin-bottom: 16px;">Nuestra Filosofía</h2>
-        <p style="font-size: 16px; line-height: 1.8; color: #555;">
+      <!-- 1. Nuestra Filosofía Primero -->
+      <div style="margin-bottom: 35px; text-align: center; max-width: 820px; margin-left: auto; margin-right: auto;">
+        <h1 style="font-size: 32px; color: #285943; margin-bottom: 16px; font-weight: 700;">Nuestra Filosofía</h1>
+        <p style="font-size: 16px; line-height: 1.8; color: #444;">
           En <strong>Nativa</strong> trabajamos mano a mano con pequeños productores y recolectores locales para llevar a tu mesa alimentos puros, libres de químicos y llenos de vitalidad. Creemos en una alimentación consciente que respeta la tierra y promueve la salud integral.
         </p>
       </div>
@@ -63,14 +58,19 @@
       </div>
       <div class="box-contact-features">
         <i class="fas fa-shipping-fast fa-2x" style="color: #285943;"></i>
-        <h4>Despacho a Todo Chile</h4>
+        <h4>Despacho a Toda Colombia</h4>
         <p>Entregas seguras y empaques compostables.</p>
       </div>
 
-      <div class="features-contact" style="margin-top: 30px; clear: both;">
+      <!-- 2. Cuestionario / Formulario de Contacto Después -->
+      <div class="features-contact" style="margin-top: 45px; margin-bottom: 50px; clear: both; border-top: 1px solid #e2eae5; padding-top: 45px;">
         <div class="box-form" style="width: 100%; max-width: 600px; margin: 0 auto; float: none;">
-          <h3 style="text-align: center; margin-bottom: 20px; color: #285943;">¿Tienes alguna consulta o pedido especial?</h3>
-          <form id="contact-form" onsubmit="event.preventDefault(); alert('¡Gracias por tu mensaje! Te responderemos a la brevedad.'); this.reset();">
+          <h2 style="text-align: center; margin-bottom: 8px; color: #285943; font-size: 26px; font-weight: 700;">¿Tienes alguna consulta o pedido especial?</h2>
+          <p style="text-align: center; color: #666; margin-bottom: 24px; font-size: 15px;">Completa este cuestionario y nuestro equipo te responderá a la brevedad.</p>
+          <div id="contact-success-msg" style="display: none; background: #e8f4ed; color: #1e4d35; border: 1px solid #b7dcbe; padding: 14px 18px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: 600;">
+            <i class="fas fa-check-circle" style="color: #285943; margin-right: 6px;"></i> ¡Gracias por tu mensaje! Nos pondremos en contacto contigo a la brevedad.
+          </div>
+          <form id="contact-form" onsubmit="event.preventDefault(); document.getElementById('contact-success-msg').style.display='block'; this.reset();">
             <div class="single-form">
               <label for="contact-name">Nombre:</label>
               <input type="text" id="contact-name" placeholder="Tu nombre" required>
@@ -80,8 +80,8 @@
               <input type="email" id="contact-email" placeholder="tu@correo.com" required>
             </div>
             <div class="single-form">
-              <label for="contact-message">Mensaje:</label>
-              <textarea id="contact-message" placeholder="Escribe tu mensaje o consulta..." required></textarea>
+              <label for="contact-message">Mensaje o Consulta:</label>
+              <textarea id="contact-message" placeholder="Escribe tu mensaje o consulta detallada..." required></textarea>
             </div>
             <div class="single-form" style="text-align: center;">
               <button type="submit" class="btn btn-nativa" style="width: 100%;">Enviar Mensaje</button>
@@ -92,11 +92,9 @@
     </div>
   </section>
 
-  <hr>
-
   <footer id="main-footer">
     <div class="container">
-      <p class="small">© 2026 - Nativa Alimentos Naturales. Todos los derechos reservados.&copy;</p>
+      <p class="small">© 2026 - Nativa Alimentos Naturales. Todos los derechos reservados.</p>
       <ul>
         <li><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
         <li><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
