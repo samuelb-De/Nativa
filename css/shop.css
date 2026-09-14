@@ -65,7 +65,7 @@
 .nativa-toast {
   position: fixed;
   bottom: 24px;
-  right: 24px;
+  left: 24px;
   background-color: var(--main-color);
   color: #ffffff;
   padding: 14px 22px;
@@ -542,11 +542,21 @@
 }
 
 .cart-qty-number {
-  padding: 3px 10px;
+  padding: 3px 0;
   font-size: 13px;
   font-weight: 600;
-  min-width: 26px;
+  width: 36px;
   text-align: center;
+  border: none;
+  background: transparent;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.cart-qty-number::-webkit-outer-spin-button,
+.cart-qty-number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .cart-item-subtotal {

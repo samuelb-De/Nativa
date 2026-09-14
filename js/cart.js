@@ -87,11 +87,21 @@
   }
 
   // Modificar cantidad
-  function updateQuantity(productId, delta) {
+  function updateQuantity(productId, delta, isAbsolute = false) {
     let cart = getStoredCart();
     const index = cart.findIndex(item => item.id === productId);
     if (index > -1) {
-      cart[index].quantity += delta;
+      if (isAbsolute) {
+        cart[index].quantity = delta;
+      } else {
+        cart[index].quantity += delta;
+      }
+      
+      if (cart[index].quantity > 50) {
+        cart[index].quantity = 50;
+        showToast('Máximo 50 unidades por producto');
+      }
+
       if (cart[index].quantity <= 0) {
         cart.splice(index, 1);
       }
@@ -196,7 +206,7 @@
           <div class="cart-item-controls">
             <div class="cart-qty-selector">
               <button class="cart-qty-btn" data-action="decrease" data-id="${item.id}" title="Disminuir">-</button>
-              <span class="cart-qty-number">${item.quantity}</span>
+              <input type="number" class="cart-qty-number" data-action="manual" data-id="${item.id}" value="${item.quantity}" min="1" max="50">
               <button class="cart-qty-btn" data-action="increase" data-id="${item.id}" title="Aumentar">+</button>
             </div>
             <div class="cart-item-subtotal">${formatMoney(item.priceNum * item.quantity)}</div>
@@ -224,6 +234,12 @@
   // Inyectar HTML del Drawer y Modal si no están en el DOM
   function injectCartDOM() {
     if (document.getElementById('cart-drawer')) return;
+
+      const colombianCities = [
+      "Acacías", "Aguachica", "Apartadó", "Arauca", "Armenia", "Barrancabermeja", "Barranquilla", "Bello", "Bogotá", "Bucaramanga", "Buenaventura", "Buga", "Cali", "Cartagena", "Cartago", "Caucasia", "Cereté", "Chía", "Ciénaga", "Copacabana", "Cúcuta", "Dosquebradas", "Duitama", "Envigado", "Espinal", "Facatativá", "Florencia", "Floridablanca", "Funza", "Fusagasugá", "Garzón", "Girardot", "Girón", "Guarne", "Ibagué", "Inírida", "Ipiales", "Itagüí", "Jamundí", "La Dorada", "Leticia", "Lorica", "Los Patios", "Madrid", "Magangué", "Maicao", "Malambo", "Manizales", "Marinilla", "Medellín", "Mitú", "Mocoa", "Montería", "Mosquera", "Neiva", "Ocaña", "Palmira", "Pamplona", "Pasto", "Pereira", "Piedecuesta", "Pitalito", "Popayán", "Puerto Asís", "Puerto Boyacá", "Puerto Carreño", "Puerto Tejada", "Quibdó", "Riohacha", "Rionegro", "Sabanalarga", "Sabaneta", "Sahagún", "San Andrés", "San Gil", "San José del Guaviare", "Santa Marta", "Santa Rosa de Cabal", "Sincelejo", "Soacha", "Sogamoso", "Soledad", "Tuluá", "Tumaco", "Tunja", "Turbaco", "Uribia", "Valledupar", "Villa de Leyva", "Villavicencio", "Yopal", "Yumbo", "Zipaquirá"
+    ].sort((a, b) => a.localeCompare(b, 'es'));
+
+    const cityOptionsHtml = colombianCities.map(c => `<option value="${c}">${c}</option>`).join('');
 
     const dom = `
       <!-- Overlay -->
@@ -311,7 +327,10 @@
                 </div>
                 <div class="form-group">
                   <label for="order-city">Ciudad / Municipio *</label>
-                  <input type="text" id="order-city" required placeholder="Bogotá, Medellín, Cali...">
+                  <select id="order-city" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit;">
+                    <option value="" disabled selected>Selecciona tu ciudad...</option>
+                    ${cityOptionsHtml}
+                  </select>
                 </div>
               </div>
               <div class="form-group">
@@ -392,6 +411,16 @@
         updateQuantity(id, 1);
       } else if (action === 'decrease') {
         updateQuantity(id, -1);
+      }
+    });
+
+    // Delegación de evento change para inputs numéricos manuales
+    document.getElementById('cart-items-container').addEventListener('change', (e) => {
+      if (e.target.classList.contains('cart-qty-number')) {
+        const id = e.target.dataset.id;
+        let qty = parseInt(e.target.value, 10);
+        if (isNaN(qty) || qty < 1) qty = 1;
+        updateQuantity(id, qty, true);
       }
     });
 
@@ -535,10 +564,38 @@
 
     document.getElementById('order-id-display').textContent = `#${orderNum}`;
     
-    // Modificar el mensaje principal para avisar del correo
+    // Configuración para WhatsApp
+    const storePhone = '573001234567'; // Cambia este número al de tu negocio
+    let whatsappText = `¡Hola Nativa! Quiero confirmar mi pedido *#${orderNum}*\n\n`;
+    whatsappText += `*Mis datos:*\n`;
+    whatsappText += `- Nombre: ${name}\n`;
+    whatsappText += `- Teléfono: ${phone}\n`;
+    whatsappText += `- Envío: ${address}, ${city}\n`;
+    whatsappText += `- Medio de pago: ${paymentLabel}\n\n`;
+    whatsappText += `*Mi compra:*\n`;
+    cart.forEach(item => {
+      whatsappText += `- ${item.quantity}x ${item.name} (${formatMoney(item.priceNum * item.quantity)})\n`;
+    });
+    whatsappText += `\n*Subtotal:* ${formatMoney(subtotal)}\n`;
+    whatsappText += `*Envío:* ${shipping === 0 ? 'Gratis' : formatMoney(shipping)}\n`;
+    whatsappText += `*Total a pagar:* ${formatMoney(total)}`;
+    
+    const whatsappUrl = `https://wa.me/573005427742?text=${encodeURIComponent(whatsappText)}`;
+
+    // Modificar el mensaje principal para avisar del correo y actualizar botones
     const leadMessage = document.querySelector('.success-lead');
     if (leadMessage) {
-      leadMessage.innerHTML = 'Hemos recibido tu solicitud de pedido. <strong>Te hemos enviado una copia de la factura a tu correo electrónico.</strong> Nos contactaremos de inmediato por WhatsApp para coordinar el despacho.';
+      leadMessage.innerHTML = 'Hemos recibido tu solicitud de pedido. <strong>Te hemos enviado una copia de la factura a tu correo electrónico.</strong> Por favor, envíanos un mensaje por WhatsApp para coordinar el despacho rápidamente.';
+    }
+
+    const successActions = document.querySelector('.success-actions');
+    if (successActions) {
+      successActions.innerHTML = `
+        <a href="${whatsappUrl}" target="_blank" class="btn btn-nativa" style="background-color: #25D366; border-color: #25D366; margin-bottom: 10px;">
+          <i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp
+        </a>
+        <a href="index.html" class="btn btn-secondary-outline" id="btn-return-home" style="display: block; margin-top: 10px;">Volver al Catálogo</a>
+      `;
     }
 
     document.getElementById('checkout-step-form').style.display = 'none';
