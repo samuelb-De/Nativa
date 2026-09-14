@@ -465,7 +465,7 @@
   }
 
   // Procesar pedido
-  function processOrder() {
+  async function processOrder() {
     const cart = getStoredCart();
     const { total, subtotal, shipping } = getCartTotals();
     const name = document.getElementById('order-name').value.trim();
@@ -482,6 +482,42 @@
       'card': 'Tarjeta Débito / Crédito',
       'cash': 'Pago Contra Entrega'
     };
+    const paymentLabel = paymentLabels[payment] || payment;
+
+    // Cambiar estado del botón mientras procesa
+    const btnSubmit = document.querySelector('#checkout-form button[type="submit"]');
+    if (btnSubmit) {
+      btnSubmit.disabled = true;
+      btnSubmit.textContent = 'Procesando...';
+    }
+
+    try {
+      // Enviar solicitud de factura al backend
+      const response = await fetch('/api/enviar-factura', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          orderNum,
+          total,
+          subtotal,
+          shipping,
+          paymentLabel,
+          cart
+        })
+      });
+
+      if (!response.ok) {
+        console.error('Error al enviar factura por correo');
+        alert('Hubo un problema al enviar la factura a tu correo. Por favor, verifica tu conexión o tus credenciales SMTP.');
+      }
+    } catch (error) {
+      console.error('Error de red al enviar factura:', error);
+      alert('Error de red al intentar enviar la factura.');
+    }
 
     const detailsContainer = document.getElementById('success-order-details');
     if (detailsContainer) {
@@ -490,7 +526,7 @@
           <p><strong>Cliente:</strong> ${name}</p>
           <p><strong>Contacto:</strong> ${phone} | ${email}</p>
           <p><strong>Despacho:</strong> ${address}, ${city}</p>
-          <p><strong>Forma de Pago:</strong> ${paymentLabels[payment] || payment}</p>
+          <p><strong>Forma de Pago:</strong> ${paymentLabel}</p>
           <hr style="margin: 10px 0; border: none; border-top: 1px dashed #ccc;">
           <p><strong>Total Cancelado:</strong> <span style="font-size: 1.2em; color: #285943; font-weight: bold;">${formatMoney(total)}</span></p>
         </div>
@@ -498,6 +534,13 @@
     }
 
     document.getElementById('order-id-display').textContent = `#${orderNum}`;
+    
+    // Modificar el mensaje principal para avisar del correo
+    const leadMessage = document.querySelector('.success-lead');
+    if (leadMessage) {
+      leadMessage.innerHTML = 'Hemos recibido tu solicitud de pedido. <strong>Te hemos enviado una copia de la factura a tu correo electrónico.</strong> Nos contactaremos de inmediato por WhatsApp para coordinar el despacho.';
+    }
+
     document.getElementById('checkout-step-form').style.display = 'none';
     document.getElementById('checkout-step-success').style.display = 'block';
 

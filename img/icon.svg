@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#347055"/>
+      <stop offset="100%" stop-color="#1f4634"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+  <circle cx="256" cy="256" r="195" fill="none" stroke="#F3EBDD" stroke-width="4" stroke-opacity="0.3"/>
+  
+  <g id="leaf-graphic">
+    <!-- Right leaf -->
+    <path d="M 256 130 C 335 130 385 185 378 275 C 370 330 320 365 256 380 C 260 320 288 250 340 205 C 275 215 260 270 256 315 Z" fill="#F3EBDD"/>
+    <!-- Left leaf -->
+    <path d="M 256 185 C 185 185 140 230 148 305 C 155 350 195 378 256 380 C 252 330 230 270 185 235 C 235 240 252 285 256 330 Z" fill="#c87a53"/>
+    <!-- Stem -->
+    <path d="M 256 380 L 256 130" stroke="#F3EBDD" stroke-width="9" stroke-linecap="round"/>
+  </g>
+  <text x="256" y="440" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="36" fill="#F3EBDD" letter-spacing="7">NATIVA</text>
+</svg>

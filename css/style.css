@@ -390,10 +390,22 @@ hr {
   float: left;
 }
 
-#portfolio ul li a {
+#portfolio ul li a.filter-btn {
   display: block;
-  padding: 20px;
+  padding: 10px 20px;
+  margin: 5px;
   text-align: center;
+  background-color: #c87a53; /* Match requested color */
+  color: #fff;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+#portfolio ul li a.filter-btn:hover,
+#portfolio ul li a.filter-btn.active {
+  background-color: #b36c49;
 }
 
 .box {
