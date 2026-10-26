@@ -236,8 +236,39 @@
     if (document.getElementById('cart-drawer')) return;
 
       const colombianCities = [
-      "Acacías", "Aguachica", "Apartadó", "Arauca", "Armenia", "Barrancabermeja", "Barranquilla", "Bello", "Bogotá", "Bucaramanga", "Buenaventura", "Buga", "Cali", "Cartagena", "Cartago", "Caucasia", "Cereté", "Chía", "Ciénaga", "Copacabana", "Cúcuta", "Dosquebradas", "Duitama", "Envigado", "Espinal", "Facatativá", "Florencia", "Floridablanca", "Funza", "Fusagasugá", "Garzón", "Girardot", "Girón", "Guarne", "Ibagué", "Inírida", "Ipiales", "Itagüí", "Jamundí", "La Dorada", "Leticia", "Lorica", "Los Patios", "Madrid", "Magangué", "Maicao", "Malambo", "Manizales", "Marinilla", "Medellín", "Mitú", "Mocoa", "Montería", "Mosquera", "Neiva", "Ocaña", "Palmira", "Pamplona", "Pasto", "Pereira", "Piedecuesta", "Pitalito", "Popayán", "Puerto Asís", "Puerto Boyacá", "Puerto Carreño", "Puerto Tejada", "Quibdó", "Riohacha", "Rionegro", "Sabanalarga", "Sabaneta", "Sahagún", "San Andrés", "San Gil", "San José del Guaviare", "Santa Marta", "Santa Rosa de Cabal", "Sincelejo", "Soacha", "Sogamoso", "Soledad", "Tuluá", "Tumaco", "Tunja", "Turbaco", "Uribia", "Valledupar", "Villa de Leyva", "Villavicencio", "Yopal", "Yumbo", "Zipaquirá"
-    ].sort((a, b) => a.localeCompare(b, 'es'));
+      "Bogotá, D.C.",
+      "Medellín, Antioquia",
+      "Cali, Valle del Cauca",
+      "Barranquilla, Atlántico",
+      "Cartagena, Bolívar",
+      "Bucaramanga, Santander",
+      "Pereira, Risaralda",
+      "Santa Marta, Magdalena",
+      "Manizales, Caldas",
+      "Cúcuta, Norte de Santander",
+      "Ibagué, Tolima",
+      "Villavicencio, Meta",
+      "Pasto, Nariño",
+      "Montería, Córdoba",
+      "Neiva, Huila",
+      "Armenia, Quindío",
+      "Popayán, Cauca",
+      "Valledupar, Cesar",
+      "Tunja, Boyacá",
+      "Riohacha, La Guajira",
+      "Quibdó, Chocó",
+      "Sincelejo, Sucre",
+      "Florencia, Caquetá",
+      "Yopal, Casanare",
+      "Arauca, Arauca",
+      "San José del Guaviare, Guaviare",
+      "Mocoa, Putumayo",
+      "Leticia, Amazonas",
+      "Inírida, Guainía",
+      "Mitú, Vaupés",
+      "Puerto Carreño, Vichada",
+      "San Andrés, San Andrés y Providencia"
+    ];
 
     const cityOptionsHtml = colombianCities.map(c => `<option value="${c}">${c}</option>`).join('');
 
@@ -302,7 +333,6 @@
           </div>
           
           <div id="checkout-step-form" class="checkout-body">
-            <div class="checkout-products-summary" id="checkout-products-summary"></div>
             
             <form id="checkout-form" class="checkout-form">
               <h4>Datos de Envío y Contacto</h4>
@@ -333,10 +363,20 @@
                   </select>
                 </div>
               </div>
+
+              <div style="display: flex; justify-content: flex-end; margin-bottom: 15px; margin-top: -5px;">
+                <button type="button" id="btn-save-user-info" style="background: transparent; border: 1px solid #285943; color: #285943; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: all 0.2s;">
+                  <i class="fas fa-save"></i> Guardar mis datos
+                </button>
+              </div>
+
               <div class="form-group">
                 <label for="order-notes">Notas especiales (opcional)</label>
                 <textarea id="order-notes" rows="2" placeholder="Indicaciones para la entrega..."></textarea>
               </div>
+
+              <!-- Moved summary here -->
+              <div class="checkout-products-summary" id="checkout-products-summary"></div>
 
               <div class="form-group payment-options">
                 <label>Método de Pago:</label>
@@ -353,6 +393,42 @@
                     <input type="radio" name="payment-method" value="cash">
                     <span><i class="fas fa-money-bill-wave"></i> Pago Contra Entrega</span>
                   </label>
+                </div>
+
+                <!-- Expanded details for transfer -->
+                <div id="transfer-details" class="payment-details-box" style="display: block; margin-top: 15px; padding: 15px; border: 1px solid #ddd; border-radius: 6px; background: #fdfdfd;">
+                  <label for="bank-selection" style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">Selecciona tu banco:</label>
+                  <select id="bank-selection" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit;">
+                    <option value="" disabled selected>Elige un banco...</option>
+                    <option value="nequi">Nequi</option>
+                    <option value="bancolombia">Bancolombia</option>
+                    <option value="davivienda">Davivienda</option>
+                    <option value="nubank">Nu Bank</option>
+                    <option value="bbva">BBVA</option>
+                    <option value="breb">BRE-B</option>
+                  </select>
+                  <div id="bank-logo-container" style="margin-top: 12px; text-align: center; display: none;">
+                    <img id="bank-logo" src="" alt="Bank Logo" style="max-height: 35px; max-width: 150px; object-fit: contain;">
+                  </div>
+                </div>
+
+                <!-- Expanded details for card -->
+                <div id="card-details" class="payment-details-box" style="display: none; margin-top: 15px; padding: 15px; border: 1px solid #ddd; border-radius: 6px; background: #fdfdfd;">
+                  <div style="position: relative;">
+                    <label for="card-number" style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">Número de tarjeta:</label>
+                    <input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19" style="width: 100%; padding: 10px; padding-right: 50px; border: 1px solid #ddd; border-radius: 4px;">
+                    <i id="card-brand-icon" class="fab fa-cc-visa" style="position: absolute; right: 12px; top: 38px; font-size: 24px; color: #ccc; display: none;"></i>
+                  </div>
+                  <div class="form-row" style="margin-top: 12px; display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                      <label for="card-expiry" style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">Expiración:</label>
+                      <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                      <label for="card-cvc" style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">CVC:</label>
+                      <input type="password" id="card-cvc" placeholder="***" maxlength="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -394,9 +470,8 @@
     
     // Vaciar carrito
     document.getElementById('btn-clear-cart').addEventListener('click', () => {
-      if (confirm('¿Estás seguro de que deseas vaciar tu carrito?')) {
-        clearCart();
-      }
+      // confirm() is blocked in some iframes, replacing with a custom confirmation or just clearing
+      clearCart();
     });
 
     // Delegación de eventos en la lista de items
@@ -431,32 +506,143 @@
     document.getElementById('checkout-close-btn').addEventListener('click', closeCheckoutModal);
     document.getElementById('btn-cancel-checkout').addEventListener('click', closeCheckoutModal);
 
+    // Guardar información del usuario
+    const btnSaveInfo = document.getElementById('btn-save-user-info');
+    if (btnSaveInfo) {
+      btnSaveInfo.addEventListener('click', () => {
+        const info = {
+          name: document.getElementById('order-name').value.trim(),
+          phone: document.getElementById('order-phone').value.trim(),
+          email: document.getElementById('order-email').value.trim(),
+          address: document.getElementById('order-address').value.trim(),
+          city: document.getElementById('order-city').value.trim()
+        };
+        localStorage.setItem('nativa_user_info', JSON.stringify(info));
+        
+        const originalText = btnSaveInfo.innerHTML;
+        btnSaveInfo.innerHTML = '<i class="fas fa-check"></i> ¡Datos Guardados!';
+        btnSaveInfo.style.background = '#285943';
+        btnSaveInfo.style.color = '#fff';
+        
+        showToast('Tus datos han sido guardados para la próxima compra');
+        
+        setTimeout(() => {
+          btnSaveInfo.innerHTML = originalText;
+          btnSaveInfo.style.background = 'transparent';
+          btnSaveInfo.style.color = '#285943';
+        }, 2500);
+      });
+    }
+
     // Submit del pedido
     document.getElementById('checkout-form').addEventListener('submit', (e) => {
       e.preventDefault();
       processOrder();
     });
+
+    // Lógica de medios de pago expandidos
+    const paymentRadios = document.querySelectorAll('input[name="payment-method"]');
+    const transferDetails = document.getElementById('transfer-details');
+    const cardDetails = document.getElementById('card-details');
+
+    paymentRadios.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        if (e.target.value === 'transfer') {
+          transferDetails.style.display = 'block';
+          cardDetails.style.display = 'none';
+        } else if (e.target.value === 'card') {
+          transferDetails.style.display = 'none';
+          cardDetails.style.display = 'block';
+        } else {
+          transferDetails.style.display = 'none';
+          cardDetails.style.display = 'none';
+        }
+      });
+    });
+
+    // Lógica del banco para transferencia
+    const bankSelection = document.getElementById('bank-selection');
+    const bankLogoContainer = document.getElementById('bank-logo-container');
+    const bankLogo = document.getElementById('bank-logo');
+
+    const bankLogos = {
+      'nequi': 'https://upload.wikimedia.org/wikipedia/commons/1/14/Nequi_Logo.svg',
+      'bancolombia': 'https://upload.wikimedia.org/wikipedia/commons/d/d4/Logo-Bancolombia.svg',
+      'davivienda': 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Logo_Davivienda.svg',
+      'nubank': 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Nubank_logo_2021.svg',
+      'bbva': 'https://upload.wikimedia.org/wikipedia/commons/0/05/BBVA_2019.svg',
+      'breb': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Banrep_logo.svg/1024px-Banrep_logo.svg.png' // BRE-B is backed by Banco de la República
+    };
+
+    bankSelection.addEventListener('change', (e) => {
+      const selectedBank = e.target.value;
+      if (bankLogos[selectedBank]) {
+        bankLogo.src = bankLogos[selectedBank];
+        bankLogoContainer.style.display = 'block';
+      } else {
+        bankLogoContainer.style.display = 'none';
+      }
+    });
+
+    // Lógica de tarjeta (Visa / Mastercard)
+    const cardNumber = document.getElementById('card-number');
+    const cardBrandIcon = document.getElementById('card-brand-icon');
+
+    cardNumber.addEventListener('input', (e) => {
+      // Formato #### #### #### ####
+      let val = e.target.value.replace(/\D/g, '');
+      let formatted = '';
+      for (let i = 0; i < val.length; i++) {
+        if (i > 0 && i % 4 === 0) formatted += ' ';
+        formatted += val[i];
+      }
+      e.target.value = formatted;
+
+      // Detección de marca
+      if (val.startsWith('4')) {
+        cardBrandIcon.className = 'fab fa-cc-visa';
+        cardBrandIcon.style.display = 'block';
+        cardBrandIcon.style.color = '#1a1f71';
+      } else if (val.startsWith('5')) {
+        cardBrandIcon.className = 'fab fa-cc-mastercard';
+        cardBrandIcon.style.display = 'block';
+        cardBrandIcon.style.color = '#eb001b';
+      } else {
+        cardBrandIcon.style.display = 'none';
+      }
+    });
+
+    const cardExpiry = document.getElementById('card-expiry');
+    cardExpiry.addEventListener('input', (e) => {
+      let val = e.target.value.replace(/\D/g, '');
+      if (val.length > 2) {
+        val = val.substring(0, 2) + '/' + val.substring(2, 4);
+      }
+      e.target.value = val;
+    });
+
   }
 
-  // Abrir modal de checkout
-  function openCheckoutModal() {
+  // Cupones de descuento disponibles
+  const AVAILABLE_COUPONS = {
+    'NATIVAMA': { percent: 20, label: '20% de descuento' },
+    'CAMILOMRK': { percent: 80, label: '80% de descuento' }
+  };
+  let appliedCoupon = null;
+  let couponFeedback = null;
+
+  // Renderizar resumen de checkout con cupón y totales
+  function renderCheckoutSummary() {
     const cart = getStoredCart();
-    if (cart.length === 0) {
-      showToast('Tu carrito está vacío');
-      return;
-    }
-
-    closeCart();
-
-    const { subtotal, shipping, total } = getCartTotals();
-    const modal = document.getElementById('checkout-modal');
+    const { subtotal, shipping } = getCartTotals();
     const summaryContainer = document.getElementById('checkout-products-summary');
     const modalTotal = document.getElementById('modal-order-total');
-    const stepForm = document.getElementById('checkout-step-form');
-    const stepSuccess = document.getElementById('checkout-step-success');
 
-    if (stepForm) stepForm.style.display = 'block';
-    if (stepSuccess) stepSuccess.style.display = 'none';
+    let discount = 0;
+    if (appliedCoupon) {
+      discount = Math.round(subtotal * (appliedCoupon.percent / 100));
+    }
+    const finalTotal = Math.max(0, subtotal - discount + shipping);
 
     if (summaryContainer) {
       summaryContainer.innerHTML = `
@@ -470,15 +656,121 @@
               </li>
             `).join('')}
           </ul>
+
+          <!-- Apartado de Cupón de Descuento -->
+          <div class="checkout-coupon-card">
+            ${appliedCoupon ? `
+              <div class="coupon-badge-active">
+                <span><i class="fas fa-tag"></i> Cupón <strong>${appliedCoupon.code}</strong> (${appliedCoupon.percent}% OFF) aplicado: -${formatMoney(discount)}</span>
+                <button type="button" id="btn-remove-coupon" class="btn-remove-coupon">Quitar cupón</button>
+              </div>
+            ` : `
+              <label for="coupon-code-input"><i class="fas fa-tags"></i> ¿Tienes un cupón de descuento?</label>
+              <div class="checkout-coupon-input-group">
+                <input type="text" id="coupon-code-input" placeholder="Ingresa tu cupón" maxlength="20">
+                <button type="button" id="btn-apply-coupon" class="btn-apply-coupon">Aplicar</button>
+              </div>
+            `}
+            ${couponFeedback ? `
+              <div class="coupon-msg-feedback ${couponFeedback.isError ? 'error' : 'success'}">
+                <i class="fas ${couponFeedback.isError ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i> ${couponFeedback.text}
+              </div>
+            ` : ''}
+          </div>
+
           <div class="checkout-mini-total">
-            <span>Subtotal: ${formatMoney(subtotal)} | Envío: ${shipping === 0 ? 'Gratis' : formatMoney(shipping)}</span>
-            <h4>Total: ${formatMoney(total)}</h4>
+            <span>
+              Subtotal: ${formatMoney(subtotal)}
+              ${discount > 0 ? ` | <span class="checkout-discount-row">Desc. (${appliedCoupon.code} -${appliedCoupon.percent}%): -${formatMoney(discount)}</span>` : ''}
+              | Envío: ${shipping === 0 ? 'Gratis' : formatMoney(shipping)}
+            </span>
+            <h4>Total: ${formatMoney(finalTotal)}</h4>
           </div>
         </div>
       `;
+
+      // Eventos del cupón
+      const btnApply = document.getElementById('btn-apply-coupon');
+      const inputCoupon = document.getElementById('coupon-code-input');
+      const btnRemove = document.getElementById('btn-remove-coupon');
+
+      if (btnApply && inputCoupon) {
+        const handleApply = () => {
+          const rawCode = (inputCoupon.value || '').trim().toUpperCase();
+          if (!rawCode) {
+            couponFeedback = { text: 'Ingresa un código de cupón', isError: true };
+            renderCheckoutSummary();
+            return;
+          }
+          if (AVAILABLE_COUPONS[rawCode]) {
+            appliedCoupon = {
+              code: rawCode,
+              percent: AVAILABLE_COUPONS[rawCode].percent,
+              label: AVAILABLE_COUPONS[rawCode].label
+            };
+            couponFeedback = { text: `¡Cupón ${rawCode} aplicado! (${AVAILABLE_COUPONS[rawCode].percent}% de descuento)`, isError: false };
+          } else {
+            couponFeedback = { text: 'Cupón no válido o expirado', isError: true };
+          }
+          renderCheckoutSummary();
+        };
+
+        btnApply.addEventListener('click', handleApply);
+        inputCoupon.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleApply();
+          }
+        });
+      }
+
+      if (btnRemove) {
+        btnRemove.addEventListener('click', () => {
+          appliedCoupon = null;
+          couponFeedback = null;
+          renderCheckoutSummary();
+        });
+      }
     }
 
-    if (modalTotal) modalTotal.textContent = formatMoney(total);
+    if (modalTotal) {
+      modalTotal.textContent = formatMoney(finalTotal);
+    }
+  }
+
+  // Abrir modal de checkout
+  function openCheckoutModal() {
+    const cart = getStoredCart();
+    if (cart.length === 0) {
+      showToast('Tu carrito está vacío');
+      return;
+    }
+
+    closeCart();
+
+    // Cargar datos guardados si existen
+    try {
+      const savedData = localStorage.getItem('nativa_user_info');
+      if (savedData) {
+        const info = JSON.parse(savedData);
+        if (info.name) document.getElementById('order-name').value = info.name;
+        if (info.phone) document.getElementById('order-phone').value = info.phone;
+        if (info.email) document.getElementById('order-email').value = info.email;
+        if (info.address) document.getElementById('order-address').value = info.address;
+        if (info.city) document.getElementById('order-city').value = info.city;
+      }
+    } catch (e) { console.error('Error loading user info:', e); }
+
+    couponFeedback = null;
+    renderCheckoutSummary();
+
+    const modal = document.getElementById('checkout-modal');
+    const stepForm = document.getElementById('checkout-step-form');
+    const stepSuccess = document.getElementById('checkout-step-success');
+
+    if (stepForm) stepForm.style.display = 'block';
+    if (stepSuccess) stepSuccess.style.display = 'none';
+
     if (modal) {
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -496,7 +788,11 @@
   // Procesar pedido
   async function processOrder() {
     const cart = getStoredCart();
-    const { total, subtotal, shipping } = getCartTotals();
+    const { subtotal, shipping } = getCartTotals();
+    const discount = appliedCoupon ? Math.round(subtotal * (appliedCoupon.percent / 100)) : 0;
+    const total = Math.max(0, subtotal - discount + shipping);
+    const couponCode = appliedCoupon ? appliedCoupon.code : null;
+
     const name = document.getElementById('order-name').value.trim();
     const phone = document.getElementById('order-phone').value.trim();
     const email = document.getElementById('order-email').value.trim();
@@ -506,12 +802,32 @@
     const payment = document.querySelector('input[name="payment-method"]:checked')?.value || 'transfer';
 
     const orderNum = 'NAT-' + Math.floor(100000 + Math.random() * 900000);
-    const paymentLabels = {
-      'transfer': 'Transferencia Bancaria',
-      'card': 'Tarjeta Débito / Crédito',
-      'cash': 'Pago Contra Entrega'
-    };
-    const paymentLabel = paymentLabels[payment] || payment;
+    
+    let paymentLabel = '';
+    if (payment === 'transfer') {
+      const bank = document.getElementById('bank-selection')?.value;
+      const bankNames = {
+        'nequi': 'Nequi',
+        'bancolombia': 'Bancolombia',
+        'davivienda': 'Davivienda',
+        'nubank': 'Nu Bank',
+        'bbva': 'BBVA',
+        'breb': 'BRE-B'
+      };
+      const bankName = bankNames[bank] || 'Transferencia Bancaria';
+      paymentLabel = `Transferencia (${bankName})`;
+    } else if (payment === 'card') {
+      const cardNum = document.getElementById('card-number')?.value.replace(/\s/g, '');
+      const last4 = cardNum ? cardNum.slice(-4) : 'XXXX';
+      
+      let brand = 'Tarjeta';
+      if (cardNum && cardNum.startsWith('4')) brand = 'Visa';
+      else if (cardNum && cardNum.startsWith('5')) brand = 'MasterCard';
+      
+      paymentLabel = `${brand} terminada en ${last4}`;
+    } else {
+      paymentLabel = 'Pago Contra Entrega';
+    }
 
     // Cambiar estado del botón mientras procesa
     const btnSubmit = document.querySelector('#checkout-form button[type="submit"]');
@@ -533,6 +849,8 @@
           orderNum,
           total,
           subtotal,
+          discount,
+          couponCode,
           shipping,
           paymentLabel,
           cart
@@ -557,6 +875,9 @@
           <p><strong>Despacho:</strong> ${address}, ${city}</p>
           <p><strong>Forma de Pago:</strong> ${paymentLabel}</p>
           <hr style="margin: 10px 0; border: none; border-top: 1px dashed #ccc;">
+          <p><strong>Subtotal:</strong> ${formatMoney(subtotal)}</p>
+          ${discount > 0 ? `<p style="color: #285943; font-weight: 600;"><strong>Descuento (${couponCode} -${appliedCoupon.percent}%):</strong> -${formatMoney(discount)}</p>` : ''}
+          <p><strong>Envío:</strong> ${shipping === 0 ? 'Gratis' : formatMoney(shipping)}</p>
           <p><strong>Total Cancelado:</strong> <span style="font-size: 1.2em; color: #285943; font-weight: bold;">${formatMoney(total)}</span></p>
         </div>
       `;
@@ -565,7 +886,6 @@
     document.getElementById('order-id-display').textContent = `#${orderNum}`;
     
     // Configuración para WhatsApp
-    const storePhone = '573001234567'; // Cambia este número al de tu negocio
     let whatsappText = `¡Hola Nativa! Quiero confirmar mi pedido *#${orderNum}*\n\n`;
     whatsappText += `*Mis datos:*\n`;
     whatsappText += `- Nombre: ${name}\n`;
@@ -577,6 +897,9 @@
       whatsappText += `- ${item.quantity}x ${item.name} (${formatMoney(item.priceNum * item.quantity)})\n`;
     });
     whatsappText += `\n*Subtotal:* ${formatMoney(subtotal)}\n`;
+    if (discount > 0) {
+      whatsappText += `*Descuento (${couponCode} -${appliedCoupon.percent}%):* -${formatMoney(discount)}\n`;
+    }
     whatsappText += `*Envío:* ${shipping === 0 ? 'Gratis' : formatMoney(shipping)}\n`;
     whatsappText += `*Total a pagar:* ${formatMoney(total)}`;
     
@@ -601,7 +924,9 @@
     document.getElementById('checkout-step-form').style.display = 'none';
     document.getElementById('checkout-step-success').style.display = 'block';
 
-    // Limpiar carrito en almacenamiento
+    // Limpiar carrito en almacenamiento y reiniciar cupón
+    appliedCoupon = null;
+    couponFeedback = null;
     localStorage.removeItem(CART_STORAGE_KEY);
     updateCartUI();
   }

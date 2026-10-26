@@ -16,7 +16,7 @@ app.use(express.json());
 
 // API route for sending email invoices
 app.post('/api/enviar-factura', async (req, res) => {
-  const { name, email, orderNum, total, subtotal, shipping, paymentLabel, cart } = req.body;
+  const { name, email, orderNum, total, subtotal, discount, couponCode, shipping, paymentLabel, cart } = req.body;
 
   if (!email || !cart || cart.length === 0) {
     return res.status(400).json({ error: 'Faltan datos requeridos' });
@@ -42,6 +42,13 @@ app.post('/api/enviar-factura', async (req, res) => {
       </tr>
     `).join('');
 
+    const discountRow = (discount && Number(discount) > 0) ? `
+      <tr>
+        <td style="padding: 10px; text-align: right; font-weight: bold; color: #285943;">Descuento ${couponCode ? `(${couponCode})` : ''}:</td>
+        <td style="padding: 10px; text-align: right; font-weight: bold; color: #285943;">-${formatMoney(discount)}</td>
+      </tr>
+    ` : '';
+
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
         <h2 style="color: #285943; text-align: center;">¡Gracias por tu compra en Nativa!</h2>
@@ -63,6 +70,7 @@ app.post('/api/enviar-factura', async (req, res) => {
               <td style="padding: 10px; text-align: right; font-weight: bold;">Subtotal:</td>
               <td style="padding: 10px; text-align: right;">${formatMoney(subtotal)}</td>
             </tr>
+            ${discountRow}
             <tr>
               <td style="padding: 10px; text-align: right; font-weight: bold;">Envío:</td>
               <td style="padding: 10px; text-align: right;">${shipping === 0 ? 'Gratis' : formatMoney(shipping)}</td>
